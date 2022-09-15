@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Morse Code Converter</title>
+  <style>
+    body {
+        font-family: Arial, sans-serif;
+      background-color: #1e1c2a;
+      text-align: center;
+      margin: 50px;
+      margin-top: 10%;
+    }
+
+    h1 {
+      color: #007BFF;
+    }
+
+    label {
+      display: block;
+      margin: 10px 0;
+      color: rgb(255, 255, 255)
+
+    }
+
+    .inputText  {
+            color: #ffffff;
+            border: 2px solid #8707ff;
+            border-radius: 10px;
+            padding: 10px 25px;
+            background: transparent;
+            max-width: 190px;
+            margin-bottom: 15px;
+        }
+        .outputText{
+            
+            color: #ffea07;
+            border: 2px solid #6aff07;
+            border-radius: 10px;
+            padding: 10px 25px;
+            background: transparent;
+            max-width: 280px;
+            height: 40px;
+            margin-bottom: 15px;
+            font-size: 25px;
+        }
+        .inputText:active{
+            box-shadow: 2px 2px 15px #8707ff inset;
+        }
+        .outputText:active {
+            box-shadow: 2px 2px 15px #49ff07 inset;
+        }
+    button {
+      padding: 8px 15px;
+      background-color: #007BFF;
+      color: #fff;
+      border: none;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+
+  </style>
+
+<body>
+
+<h1>Morse Code Converter</h1>
+
+<label for="inputText">Enter text:</label>
+<input type="text" class="inputText" id="inputText">
+<button onclick="textToMorse()">Convert to Morse</button>
+
+<label for="morseCode">Morse code:</label>
+<input type="text" class="outputText" id="morseCode" readonly>
+
+<br>
+
+<label for="inputMorse">Enter Morse code:</label>
+<input type="text" class="inputText" id="inputMorse">
+<button onclick="morseToText()">Convert to Text</button>
+
+<label for="convertedText">Converted text:</label>
+<input type="text"  class="outputText" id="convertedText" readonly>
+
+<script>
+const morseCodeMap = {
+  'A': '.-', 'B': '-...', 'C': '-.-.', 'D': '-..', 'E': '.', 'F': '..-.', 'G': '--.', 'H': '....', 'I': '..', 'J': '.---',
+  'K': '-.-', 'L': '.-..', 'M': '--', 'N': '-.', 'O': '---', 'P': '.--.', 'Q': '--.-', 'R': '.-.', 'S': '...', 'T': '-',
+  'U': '..-', 'V': '...-', 'W': '.--', 'X': '-..-', 'Y': '-.--', 'Z': '--..',
+  '0': '-----', '1': '.----', '2': '..---', '3': '...--', '4': '....-', '5': '.....', '6': '-....', '7': '--...', '8': '---..', '9': '----.',
+  ' ': '/'
+};
+
+const reverseMorseCodeMap = {};
+for (const key in morseCodeMap) {
+  if (morseCodeMap.hasOwnProperty(key)) {
+    reverseMorseCodeMap[morseCodeMap[key]] = key;
+  }
+}
+
+function textToMorse() {
+  const inputText = document.getElementById('inputText').value.toUpperCase();
+  let morseResult = '';
+  for (let i = 0; i < inputText.length; i++) {
+    const char = inputText[i];
+    if (morseCodeMap[char]) {
+      morseResult += morseCodeMap[char] + ' ';
+    }
+  }
+  document.getElementById('morseCode').value = morseResult.trim();
+}
+
+function morseToText() {
+  const inputMorse = document.getElementById('inputMorse').value;
+  const morseArray = inputMorse.split(' ');
+  let textResult = '';
+  for (let i = 0; i < morseArray.length; i++) {
+    const morseChar = morseArray[i];
+    if (reverseMorseCodeMap[morseChar]) {
+      textResult += reverseMorseCodeMap[morseChar];
+    }
+  }
+  document.getElementById('convertedText').value = textResult;
+}
+</script>
+
+</body>
+</html>

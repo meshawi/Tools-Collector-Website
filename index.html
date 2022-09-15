@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="Style.css" />
+  </head>
+  <body>
+    <header>
+      <h1>Tools Collector</h1>
+    </header>
+
+    <main>
+      <p>Welcome to Tools Collector!</p>
+
+      <div class="button-container">
+        <button class="btn" onclick="openTool('Textual')">Textual</button>
+      </div>
+    </main>
+    <footer>
+      <p>&copy; 2023 Tools Collector</p>
+    </footer>
+
+    <script>
+      function openTool(toolName) {
+        const htmlFilePath = `${toolName}.html`;
+        window.open(htmlFilePath, "_self");
+      }
+    </script>
+  </body>
+</html>

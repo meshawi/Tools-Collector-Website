@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Case Converter</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        text-align: center;
+        margin: 0;
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        background-color: #1e1c2a;
+      }
+
+      h2 {
+        color: #00bcd4;
+        margin-bottom: 20px;
+      }
+
+      label {
+        font-weight: bold;
+        margin-right: 10px;
+        color: #00bcd4;
+      }
+
+      #inputText,
+      #outputText {
+        color: #8707ff;
+        border: 2px solid #8707ff;
+        border-radius: 10px;
+        padding: 10px 25px;
+        background: transparent;
+        max-width: 190px;
+        margin-bottom: 15px;
+      }
+
+      #inputText:active,
+      #outputText:active {
+        box-shadow: 2px 2px 15px #8707ff inset;
+      }
+
+      .radio-container {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 20px;
+      }
+
+      .radio-option {
+        margin-right: 20px;
+        position: relative;
+        cursor: pointer;
+      }
+
+      .radio-option input {
+        display: none;
+      }
+
+      .radio-option label {
+        position: relative;
+        padding-left: 30px;
+        cursor: pointer;
+        color: #fff;
+      }
+
+      .radio-option label::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 2px;
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        background-color: #8707ff;
+        transition: background-color 0.3s;
+      }
+
+      .radio-option input:checked + label::before {
+        background-color: #00bcd4;
+      }
+
+      button {
+        width: 165px;
+        height: 62px;
+        cursor: pointer;
+        color: #fff;
+        font-size: 17px;
+        border-radius: 1rem;
+        border: none;
+        position: relative;
+        background: #100720;
+        transition: 0.1s;
+      }
+
+      button::after {
+        content: "";
+        width: 100%;
+        height: 100%;
+        background-image: radial-gradient(
+          circle farthest-corner at 10% 20%,
+          rgba(255, 94, 247, 1) 17.8%,
+          rgba(2, 245, 255, 1) 100.2%
+        );
+        filter: blur(15px);
+        z-index: -1;
+        position: absolute;
+        left: 0;
+        top: 0;
+      }
+
+      button:active {
+        transform: scale(0.9) rotate(3deg);
+        background: radial-gradient(
+          circle farthest-corner at 10% 20%,
+          rgba(255, 94, 247, 1) 17.8%,
+          rgba(2, 245, 255, 1) 100.2%
+        );
+        transition: 0.5s;
+      }
+    </style>
+  </head>
+  <body>
+    <h2>Case Converter</h2>
+
+    <input type="text" id="inputText" placeholder="Type something here...." />
+
+    <div class="radio-container">
+      <div class="radio-option">
+        <input type="radio" name="caseType" id="lowerCaseRadio" />
+        <label for="lowerCaseRadio">Lowercase</label>
+      </div>
+      <div class="radio-option">
+        <input type="radio" name="caseType" id="upperCaseRadio" />
+        <label for="upperCaseRadio">Uppercase</label>
+      </div>
+      <div class="radio-option">
+        <input type="radio" name="caseType" id="sentenceCaseRadio" />
+        <label for="sentenceCaseRadio">Sentence Case</label>
+      </div>
+    </div>
+    <br /><br />
+    <button onclick="convertText()">Convert</button>
+    <br /><br /><br />
+    <input type="text" id="outputText" placeholder="Result" readonly />
+    <br />
+    <button onclick="copyToClipboard()">Copy to Clipboard</button>
+
+    <script>
+      function convertText() {
+        var inputText = document.getElementById("inputText").value;
+        var outputText = document.getElementById("outputText");
+
+        var lowerCaseRadio = document.getElementById("lowerCaseRadio").checked;
+        var upperCaseRadio = document.getElementById("upperCaseRadio").checked;
+        var sentenceCaseRadio =
+          document.getElementById("sentenceCaseRadio").checked;
+
+        var result = "";
+
+        if (lowerCaseRadio) {
+          result = inputText.toLowerCase();
+        } else if (upperCaseRadio) {
+          result = inputText.toUpperCase();
+        } else if (sentenceCaseRadio) {
+          result =
+            inputText.charAt(0).toUpperCase() +
+            inputText.slice(1).toLowerCase();
+        }
+
+        outputText.value = result;
+      }
+
+      function copyToClipboard() {
+        var outputText = document.getElementById("outputText");
+        outputText.select();
+        document.execCommand("copy");
+        alert("Copied to clipboard: " + outputText.value);
+      }
+    </script>
+  </body>
+</html>

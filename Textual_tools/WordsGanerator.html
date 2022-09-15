@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Word Generator</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+        background-color: #1e1c2a;
+      }
+
+      h1,
+      label {
+        color: #4cc2ff;
+      }
+
+      button {
+        padding: 10px;
+        font-size: 16px;
+        cursor: pointer;
+        margin-top: 10px;
+        position: relative;
+        overflow: hidden;
+        height: 3rem;
+        padding: 0 2rem;
+        border-radius: 1.5rem;
+        background: #3d3a4e;
+        background-size: 400%;
+        color: #fff;
+        border: none;
+      }
+
+      .button:hover::before {
+        transform: scaleX(1);
+      }
+
+      .button-content {
+        position: relative;
+        z-index: 1;
+      }
+
+      .button::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        transform: scaleX(0);
+        transform-origin: 0 50%;
+        width: 100%;
+        height: inherit;
+        border-radius: inherit;
+        background: linear-gradient(
+          82.3deg,
+          rgba(150, 93, 233, 1) 10.8%,
+          rgba(99, 88, 238, 1) 94.3%
+        );
+        transition: all 0.475s;
+      }
+
+      .search-bar {
+        width: 200px;
+        height: 35px;
+        border-radius: 5px;
+        outline: none;
+        border: 1px solid #303030;
+        border-bottom: 2px solid #9a9a9a;
+        padding-left: 10px;
+        padding-right: 10px;
+        background-color: #2d2d2d;
+        color: white;
+        transition: all 0.3s ease;
+      }
+
+      .search-bar::placeholder {
+        color: #9a9a9a;
+      }
+
+      .search-bar:hover {
+        background-color: #313131;
+      }
+
+      .search-bar:active,
+      .search-bar:focus {
+        background-color: #1e1f20;
+        border: 1px solid #2d2d2d;
+        border-bottom: 2px solid #4cc2ff;
+      }
+
+      #generatedWords {
+        flex-direction: column;
+        gap: 10px;
+        background: #333333;
+        border-radius: 5px;
+        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        backdrop-filter: blur(8.2px);
+        -webkit-backdrop-filter: blur(8.2px);
+        border: 1px solid gold;
+        width: 100%;
+        max-width: 400px;
+        height: 8em;
+        margin-top: 10px;
+        color: #4cc2ff;
+        font-size: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Word Generator</h1>
+    <label for="numWords">Number of Words:</label><br />
+    <input class="search-bar" type="number" id="numWords" min="1" value="1" />
+    <br />
+    <button class="button" onclick="generateWords()">Generate Words</button>
+    <br />
+    <textarea id="generatedWords" rows="5" cols="30" readonly></textarea>
+    <br />
+    <button class="button" onclick="copyToClipboard()">
+      Copy to Clipboard
+    </button>
+
+    <script>
+      function generateWords() {
+        const numWords = document.getElementById("numWords").value;
+        let result = "";
+
+        for (let i = 0; i < numWords; i++) {
+          const length = getRandomInt(5, 10);
+          const alphabet = "abcdefghijklmnopqrstuvwxyz";
+          let word = "";
+
+          for (let j = 0; j < length; j++) {
+            const randomIndex = getRandomInt(0, alphabet.length - 1);
+            word += alphabet[randomIndex];
+          }
+
+          result += word + " ";
+        }
+
+        document.getElementById("generatedWords").value = result.trim();
+      }
+
+      function copyToClipboard() {
+        const textarea = document.getElementById("generatedWords");
+        textarea.select();
+        document.execCommand("copy");
+        alert("Copied to clipboard!");
+      }
+
+      function getRandomInt(min, max) {
+        return Math.floor(Math.random() * (max - min + 1)) + min;
+      }
+    </script>
+  </body>
+</html>

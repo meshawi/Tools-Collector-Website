@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Random Number Generator</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+        background-color: #1e1c2a;
+      }
+      h1,
+      label {
+        color: #4cc2ff;
+      }
+      .container {
+        max-width: 600px;
+        width: 100%;
+        padding: 20px;
+        box-sizing: border-box;
+        text-align: center;
+      }
+
+      .customCheckBoxHolder {
+        margin: 5px;
+        display: flex;
+        justify-content: center;
+      }
+
+      .input {
+        -webkit-appearance: none;
+        display: block;
+        margin: 10px;
+        width: 24px;
+        height: 24px;
+        border-radius: 12px;
+        cursor: pointer;
+        vertical-align: middle;
+        box-shadow: hsla(148, 100%, 30%, 0.15) 0 1px 1px,
+          inset hsla(0, 0%, 0%, 0.5) 0 0 0 1px;
+        background-color: hsla(0, 0%, 97%, 0.2);
+        background-image: -webkit-radial-gradient(
+          hsla(200, 100%, 90%, 1) 0%,
+          hsla(200, 100%, 70%, 1) 15%,
+          hsla(200, 100%, 60%, 0.3) 28%,
+          hsla(200, 100%, 30%, 0) 70%
+        );
+        background-repeat: no-repeat;
+        -webkit-transition: background-position 0.15s cubic-bezier(0.8, 0, 1, 1),
+          -webkit-transform 0.25s cubic-bezier(0.8, 0, 1, 1);
+        outline: none;
+      }
+
+      .input:checked {
+        -webkit-transition: background-position 0.2s 0.15s
+            cubic-bezier(0, 0, 0.2, 1),
+          -webkit-transform 0.25s cubic-bezier(0, 0, 0.2, 1);
+      }
+
+      .input:active {
+        -webkit-transform: scale(1.5);
+        -webkit-transition: -webkit-transform 0.1s cubic-bezier(0, 0, 0.2, 1);
+      }
+
+      .input,
+      .input:active {
+        background-position: 0 24px;
+      }
+
+      .input:checked {
+        background-position: 0 0;
+      }
+
+      .input:checked ~ .input,
+      .input:checked ~ .input:active {
+        background-position: 0 -24px;
+      }
+
+      .button,
+      .copyButton {
+        cursor: pointer;
+        padding: 10px 24px;
+        font-size: 18px;
+        color: rgb(193, 163, 98);
+        border: 2px solid rgb(193, 163, 98);
+        border-radius: 34px;
+        background-color: transparent;
+        font-weight: 600;
+        transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+        overflow: hidden;
+      }
+
+      .button::before,
+      .copyButton::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        margin: auto;
+        width: 50px;
+        height: 50px;
+        border-radius: inherit;
+        scale: 0;
+        z-index: -1;
+        background-color: rgb(193, 163, 98);
+        transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+      }
+
+      .button:hover::before,
+      .copyButton:hover::before {
+        scale: 6;
+      }
+
+      .button:hover,
+      .copyButton:hover {
+        color: #212121;
+        scale: 1.1;
+        box-shadow: 0 0px 20px rgba(193, 163, 98, 0.4);
+      }
+
+      .button:active,
+      .copyButton:active {
+        scale: 1;
+      }
+
+      .search-bar {
+        width: 200px;
+        height: 35px;
+        border-radius: 5px;
+        outline: none;
+        border: 1px solid #303030;
+        border-bottom: 2px solid #9a9a9a;
+        padding-left: 10px;
+        padding-right: 10px;
+        background-color: #2d2d2d;
+        color: white;
+        transition: all 0.3s ease;
+      }
+
+      .search-bar::placeholder {
+        color: #9a9a9a;
+      }
+
+      .search-bar:hover {
+        background-color: #313131;
+      }
+
+      .search-bar:active,
+      .search-bar:focus {
+        background-color: #1e1f20;
+        border: 1px solid #2d2d2d;
+        border-bottom: 2px solid #4cc2ff;
+      }
+
+      #resultTextArea {
+        flex-direction: column;
+        gap: 10px;
+        background: #333333;
+        border-radius: 5px;
+        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        backdrop-filter: blur(8.2px);
+        -webkit-backdrop-filter: blur(8.2px);
+        border: 1px solid gold;
+        width: 100%;
+        max-width: 400px;
+        height: 8em;
+        margin-top: 10px;
+        color: #4cc2ff;
+        font-size: 20px;
+      }
+
+      label {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-top: 10px;
+      }
+
+      label span {
+        margin-right: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Random Number Generator</h1>
+
+      <div class="customCheckBoxHolder">
+        <label>
+          <input
+            type="radio"
+            class="input"
+            name="precision"
+            value="0"
+            checked
+          />
+          <span>Integer</span>
+        </label>
+
+        <label>
+          <input type="radio" class="input" name="precision" value="1" />
+          <span>1 decimal place</span>
+        </label>
+
+        <label>
+          <input type="radio" class="input" name="precision" value="2" />
+          <span>2 decimal places</span>
+        </label>
+      </div>
+
+      <label>
+        <span>Min:</span>
+        <input type="number" id="min" class="search-bar" value="1" />
+      </label>
+
+      <label>
+        <span>Max:</span>
+        <input type="number" id="max" class="search-bar" value="100" />
+      </label>
+
+      <br />
+
+      <button class="button" onclick="generateRandomNumber()">
+        Generate Random Number
+      </button>
+
+      <div id="result">
+        <br />
+        <textarea id="resultTextArea" readonly></textarea>
+        <br /><br />
+
+        <button class="copyButton" onclick="copyToClipboard()">
+          Copy to Clipboard
+        </button>
+      </div>
+
+      <script>
+        function generateRandomNumber() {
+          var min = parseInt(document.getElementById("min").value);
+          var max = parseInt(document.getElementById("max").value);
+          var precisionElements = document.getElementsByName("precision");
+          var precision;
+
+          for (var i = 0; i < precisionElements.length; i++) {
+            if (precisionElements[i].checked) {
+              precision = parseInt(precisionElements[i].value);
+              break;
+            }
+          }
+
+          var randomNumber = Math.random() * (max - min) + min;
+
+          if (precision > 0) {
+            randomNumber = randomNumber.toFixed(precision);
+          } else {
+            randomNumber = Math.round(randomNumber);
+          }
+
+          document.getElementById("resultTextArea").value = randomNumber;
+        }
+
+        function copyToClipboard() {
+          var copyText = document.getElementById("resultTextArea");
+          copyText.select();
+          copyText.setSelectionRange(0, 99999);
+          document.execCommand("copy");
+          alert("Copied to clipboard: " + copyText.value);
+        }
+      </script>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Text Counter</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 20px;
+        background-color: #1e1c2a;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+      }
+
+      textarea {
+        width: 450px;
+        background: linear-gradient(#212121, #212121) padding-box,
+          linear-gradient(145deg, transparent 35%, #e81cff, #40c9ff) border-box;
+        border: 2px solid transparent;
+        padding: 32px 24px;
+        font-size: 14px;
+        font-family: inherit;
+        color: white;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        box-sizing: border-box;
+        border-radius: 16px;
+        background-size: 200% 100%;
+      }
+
+      h1,
+      p {
+        color: #00bcd4;
+      }
+
+      #results {
+        font-size: 16px;
+        text-align: left;
+        width: 400px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Text Counter</h1>
+
+    <textarea
+      id="textInput"
+      placeholder="Enter text here..."
+      oninput="countText()"
+    ></textarea>
+
+    <div id="results">
+      <p>Words: <span id="wordCount">0</span></p>
+      <p>Letters: <span id="letterCount">0</span></p>
+      <p>Lines: <span id="lineCount">0</span></p>
+      <p>Numbers: <span id="numberCount">0</span></p>
+    </div>
+
+    <script>
+      function countText() {
+        const textInput = document.getElementById("textInput").value;
+
+        // Word count
+        const words = textInput.match(/\b\w+\b/g);
+        const wordCount = words ? words.length : 0;
+        document.getElementById("wordCount").innerText = wordCount;
+
+        // Letter count
+        const letterCount = textInput.replace(/[^a-zA-Z]/g, "").length;
+        document.getElementById("letterCount").innerText = letterCount;
+
+        // Line count
+        const lineCount = textInput.split("\n").length;
+        document.getElementById("lineCount").innerText = lineCount;
+
+        // Number count
+        const numbers = textInput.match(/\b\d+\b/g);
+        const numberCount = numbers ? numbers.length : 0;
+        document.getElementById("numberCount").innerText = numberCount;
+      }
+    </script>
+  </body>
+</html>
