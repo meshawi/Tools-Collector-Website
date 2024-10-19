@@ -4,6 +4,10 @@
 
 Tools Collector is a web-based application that was intended to serve as a collection of various tools. However, due to limited skills at the time of development, only textual tools were added. The project includes simple yet useful tools such as case converters, Morse code converters, random number generators, and more.
 
+![Home Page](Screenshot1.png)
+
+![Textual Tools](Screenshot2.png)
+
 ## Features
 
 - **Case Converter**: Convert text to lowercase, uppercase, or sentence case.
